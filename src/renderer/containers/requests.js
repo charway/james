@@ -1,48 +1,52 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 
-import NoRequests from '../component/requests/no-requests.js';
-import Search from '../component/requests/search.js';
-import Requests from '../component/requests/requests.js';
-import InspectRequest from '../component/inspect-request/inspect-request.js';
+import NoRequests from '../component/requests/no-requests.js'
+import Search from '../component/requests/search.js'
+import Requests from '../component/requests/requests.js'
+import InspectRequest from '../component/inspect-request/inspect-request.js'
 
-const RequestsContainer = ({hasRequests, clearContextRequest}) => {
-  const handleClick = (evt) => {
-    if (evt.target.matches('.request *')) return;
-    clearContextRequest();
-  };
+const RequestsContainer = ({ hasRequests, clearContextRequest }) => {
+    const handleClick = evt => {
+        if (evt.target.matches('.request *')) return
+        clearContextRequest()
+    }
 
-  let output = <NoRequests />;
+    let output = <NoRequests />
 
-  if (hasRequests) {
-    output = <span onClick={handleClick} onContextMenu={handleClick}>
-      <div className="header">
-        <Search />
-      </div>
-      <Requests />
-      <InspectRequest />
-    </span>;
-  }
+    if (hasRequests) {
+        output = (
+            <span onClick={handleClick} onContextMenu={handleClick}>
+                <div className="header">
+                    <Search />
+                </div>
+                <Requests />
+                <InspectRequest />
+            </span>
+        )
+    }
 
-  return output;
-};
+    return output
+}
 
 RequestsContainer.propTypes = {
-  hasRequests: PropTypes.bool.isRequired,
-  clearContextRequest: PropTypes.func.isRequired
-};
+    hasRequests: PropTypes.bool.isRequired,
+    clearContextRequest: PropTypes.func.isRequired
+}
 
+import { setContextRequest } from '../../common/actions/requests.js'
+import { hasRequests } from '../reducers/requests.js'
 
-import { setContextRequest } from '../../common/actions/requests.js';
-import { hasRequests } from '../reducers/requests.js';
+const mapStateToProps = state => ({
+    hasRequests: hasRequests(state)
+})
 
-const mapStateToProps = (state) => ({
-  hasRequests: hasRequests(state)
-});
+const mapDispatchToProps = dispatch => ({
+    clearContextRequest: () => dispatch(setContextRequest(null))
+})
 
-const mapDispatchToProps = (dispatch) => ({
-  clearContextRequest: () => dispatch(setContextRequest(null))
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(RequestsContainer);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(RequestsContainer)

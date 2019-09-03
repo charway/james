@@ -1,35 +1,35 @@
-import { push } from 'react-router-redux';
+import { push } from 'react-router-redux'
 
-export const INIT = 'INIT';
-export const SET_UPDATER_STATUS = 'SET_UPDATER_STATUS';
+export const INIT = 'INIT'
+export const SET_UPDATER_STATUS = 'SET_UPDATER_STATUS'
 
 export function init(data) {
-  return (dispatch) => {
-    dispatch({
-      type: INIT,
-      ...data
-    });
+    return dispatch => {
+        dispatch({
+            type: INIT,
+            ...data
+        })
 
-    dispatch(navigateToHome());
-  };
+        dispatch(navigateToHome())
+    }
 }
 
-export function setUpdaterStatus({status, info}) {
-  return {
-    type: SET_UPDATER_STATUS,
-    status,
-    info
-  };
+export function setUpdaterStatus({ status, info }) {
+    return {
+        type: SET_UPDATER_STATUS,
+        status,
+        info
+    }
 }
 
 export function navigateToHome() {
-  return push('/');
+    return push('/')
 }
 
 export function navigateToRequests() {
-  return push('/requests');
+    return push('/requests')
 }
 
 export function navigateToUrlMappings() {
-  return push('/url-mappings');
+    return push('/url-mappings')
 }

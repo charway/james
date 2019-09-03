@@ -1,6 +1,6 @@
-import { remote } from 'electron';
+import { remote } from 'electron'
 
 export function toggleDevTools() {
-  const webContents = remote.getCurrentWebContents();
-  webContents.toggleDevTools();
+    const webContents = remote.getCurrentWebContents()
+    webContents.toggleDevTools()
 }

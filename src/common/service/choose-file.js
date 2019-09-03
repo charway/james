@@ -1,11 +1,15 @@
-import {remote} from 'electron';
+import { remote } from 'electron'
 
 export default function createChooseFile(window) {
-  const {dialog} = remote;
+    const { dialog } = remote
 
-  return function chooseFile(callback) {
-    dialog.showOpenDialog(window, {
-      properties: ['openFile']
-    }, callback);
-  };
+    return function chooseFile(callback) {
+        dialog.showOpenDialog(
+            window,
+            {
+                properties: ['openFile']
+            },
+            callback
+        )
+    }
 }

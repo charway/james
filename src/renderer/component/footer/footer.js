@@ -1,94 +1,86 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 
-import CacheButton from './cache.js';
-import Throttle from './throttle.js';
-import RequestCount from './request-count.js';
-import ProxyStatus from './proxy-status.js';
-import UpdateStatus from './update-status';
+import CacheButton from './cache.js'
+import Throttle from './throttle.js'
+import RequestCount from './request-count.js'
+import ProxyStatus from './proxy-status.js'
+import UpdateStatus from './update-status'
 
+import { ProxyStatus as ProxyStatusTypes, UpdateStatus as UpdateStatusTypes } from '../../../common/prop-types'
 import {
-  ProxyStatus as ProxyStatusTypes,
-  UpdateStatus as UpdateStatusTypes
-} from '../../../common/prop-types';
-import {
-  toggleCaching,
-  toggleThrottling as toggleThrottle,
-  setThrottleRate,
-  clearRequests
-} from '../../../common/actions/proxy.js';
+    toggleCaching,
+    toggleThrottling as toggleThrottle,
+    setThrottleRate,
+    clearRequests
+} from '../../../common/actions/proxy.js'
 
-import { getUpdateStatus } from '../../reducers/app.js';
-import { getProxyState } from '../../reducers/proxy.js';
-import { getFilteredRequestCount, getTotalRequestCount } from '../../reducers/requests';
+import { getUpdateStatus } from '../../reducers/app.js'
+import { getProxyState } from '../../reducers/proxy.js'
+import { getFilteredRequestCount, getTotalRequestCount } from '../../reducers/requests'
 
-const Footer = props =>
-  <div className="footer">
-    <CacheButton
-      cachingEnabled={props.cachingEnabled}
-      toggleCaching={props.toggleCaching}
-    />
-    <Throttle
-      toggleThrottle={props.toggleThrottle}
-      setThrottleRate={props.setThrottleRate}
-      throttleEnabled={props.throttleEnabled}
-      throttleRate={props.throttleRate}
-    />
-    <RequestCount
-      filteredRequestCount={props.filteredRequestCount}
-      totalRequestCount={props.totalRequestCount}
-      clearRequests={props.clearRequests}
-    />
-    <UpdateStatus
-      status={props.updateStatus}
-      info={props.updateInfo}
-    />
-    <ProxyStatus
-      proxyStatus={props.proxyStatus}
-      proxyReason={props.proxyReason}
-    />
-  </div>;
+const Footer = props => (
+    <div className="footer">
+        <CacheButton cachingEnabled={props.cachingEnabled} toggleCaching={props.toggleCaching} />
+        <Throttle
+            toggleThrottle={props.toggleThrottle}
+            setThrottleRate={props.setThrottleRate}
+            throttleEnabled={props.throttleEnabled}
+            throttleRate={props.throttleRate}
+        />
+        <RequestCount
+            filteredRequestCount={props.filteredRequestCount}
+            totalRequestCount={props.totalRequestCount}
+            clearRequests={props.clearRequests}
+        />
+        <UpdateStatus status={props.updateStatus} info={props.updateInfo} />
+        <ProxyStatus proxyStatus={props.proxyStatus} proxyReason={props.proxyReason} />
+    </div>
+)
 
 Footer.propTypes = {
-  cachingEnabled: PropTypes.bool.isRequired,
-  toggleCaching: PropTypes.func.isRequired,
-  proxyStatus: ProxyStatusTypes.isRequired,
-  proxyReason: PropTypes.string,
-  proxyMessage: PropTypes.string,
-  filteredRequestCount: PropTypes.number.isRequired,
-  totalRequestCount: PropTypes.number.isRequired,
-  clearRequests: PropTypes.func.isRequired,
-  toggleThrottle: PropTypes.func.isRequired,
-  setThrottleRate: PropTypes.func.isRequired,
-  throttleEnabled: PropTypes.bool,
-  throttleRate: PropTypes.number,
-  updateStatus: UpdateStatusTypes,
-  updateInfo: PropTypes.any
-};
+    cachingEnabled: PropTypes.bool.isRequired,
+    toggleCaching: PropTypes.func.isRequired,
+    proxyStatus: ProxyStatusTypes.isRequired,
+    proxyReason: PropTypes.string,
+    proxyMessage: PropTypes.string,
+    filteredRequestCount: PropTypes.number.isRequired,
+    totalRequestCount: PropTypes.number.isRequired,
+    clearRequests: PropTypes.func.isRequired,
+    toggleThrottle: PropTypes.func.isRequired,
+    setThrottleRate: PropTypes.func.isRequired,
+    throttleEnabled: PropTypes.bool,
+    throttleRate: PropTypes.number,
+    updateStatus: UpdateStatusTypes,
+    updateInfo: PropTypes.any
+}
 
-const mapStateToProps = (state) => {
-  const proxy = getProxyState(state);
-  const update = getUpdateStatus(state);
+const mapStateToProps = state => {
+    const proxy = getProxyState(state)
+    const update = getUpdateStatus(state)
 
-  return {
-    cachingEnabled: proxy.cachingEnabled,
-    throttleEnabled: proxy.throttleEnabled,
-    throttleRate: proxy.throttleRate,
-    filteredRequestCount: getFilteredRequestCount(state),
-    totalRequestCount: getTotalRequestCount(state),
-    proxyStatus: proxy.status,
-    proxyReason: proxy.statusReason,
-    updateStatus: update.status,
-    updateInfo: update.info
-  };
-};
+    return {
+        cachingEnabled: proxy.cachingEnabled,
+        throttleEnabled: proxy.throttleEnabled,
+        throttleRate: proxy.throttleRate,
+        filteredRequestCount: getFilteredRequestCount(state),
+        totalRequestCount: getTotalRequestCount(state),
+        proxyStatus: proxy.status,
+        proxyReason: proxy.statusReason,
+        updateStatus: update.status,
+        updateInfo: update.info
+    }
+}
 
 const mapDispatchToProps = {
-  toggleCaching,
-  toggleThrottle,
-  setThrottleRate,
-  clearRequests
-};
+    toggleCaching,
+    toggleThrottle,
+    setThrottleRate,
+    clearRequests
+}
 
-export default connect(mapStateToProps, mapDispatchToProps)(Footer);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Footer)

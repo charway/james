@@ -1,43 +1,41 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from 'react'
+import PropTypes from 'prop-types'
 
-const RequestLabels = (props) => {
-  const {request, labels} = props;
+const RequestLabels = props => {
+    const { request, labels } = props
 
-  const url = request.fullUrl;
-  const labelNodes = [];
+    const url = request.fullUrl
+    const labelNodes = []
 
-  if (request.isMappedUrl) {
-    const activeClass = request.isMappingActive ? 'mapped' : 'mapped-inactive';
+    if (request.isMappedUrl) {
+        const activeClass = request.isMappingActive ? 'mapped' : 'mapped-inactive'
 
-    labelNodes.push(
-      <span className={`label ${activeClass}`} key="mapped" title={request.newUrl}>
-        <i className="fa fa-warning" />
-        mapped
-      </span>
-    );
-  }
-
-  labels.forEach(function(label, index) {
-    if (!label.regex.test(url)) {
-      return;
+        labelNodes.push(
+            <span className={`label ${activeClass}`} key="mapped" title={request.newUrl}>
+                <i className="fa fa-warning" />
+                mapped
+            </span>
+        )
     }
 
-    labelNodes.push(
-      <span className={`label ${label.className}`} key={index}>
-        {label.name}
-      </span>
-    );
-  });
+    labels.forEach(function(label, index) {
+        if (!label.regex.test(url)) {
+            return
+        }
 
-  return <div className="labels">
-    {labelNodes}
-  </div>;
-};
+        labelNodes.push(
+            <span className={`label ${label.className}`} key={index}>
+                {label.name}
+            </span>
+        )
+    })
+
+    return <div className="labels">{labelNodes}</div>
+}
 
 RequestLabels.propTypes = {
-  request: PropTypes.object.isRequired,
-  labels: PropTypes.array.isRequired
-};
+    request: PropTypes.object.isRequired,
+    labels: PropTypes.array.isRequired
+}
 
-export default RequestLabels;
+export default RequestLabels
